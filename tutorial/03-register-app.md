@@ -4,14 +4,14 @@ Dans cet exercice, vous allez créer une nouvelle application Azure AD à l’ai
 
 1. Ouvrez un navigateur, accédez au [Centre d’administration Azure Active Directory ](https://aad.portal.azure.com) et connectez-vous à l’aide d’un **compte personnel** (ou compte Microsoft) ou d’un **compte professionnel ou scolaire**.
 
-1. Sélectionnez **Azure Active Directory** dans le volet de navigation de gauche, puis sélectionnez **inscriptions des applications** sous **gérer**.
+1. Sélectionnez **Azure Active Directory** dans le volet de navigation gauche, puis sélectionnez **Inscriptions d’applications** sous **Gérer**.
 
     ![Capture d’écran des inscriptions d’application ](./images/aad-portal-app-registrations.png)
 
 1. Sélectionnez **Nouvelle inscription**. Sur la page **Inscrire une application**, définissez les valeurs comme suit.
 
     - Définissez le **Nom** sur `.NET Core Graph Tutorial`.
-    - Définissez les types de comptes **pris en charge** sur **les comptes dans n’importe quel annuaire d’organisation**.
+    - Définissez les **Types de comptes pris en charge** sur **Comptes dans un annuaire organisationnel et comptes personnels Microsoft**.
     - Laissez **Redirect URI** vide.
 
     ![Capture d’écran de la page inscrire une application](./images/aad-register-an-app.png)

@@ -28,12 +28,12 @@ Avant de poursuivre, ajoutez des dépendances supplémentaires que vous utiliser
 Exécutez les commandes suivantes dans votre interface CLI pour installer les dépendances.
 
 ```Shell
-dotnet add package Microsoft.Extensions.Configuration --version 2.2.0
-dotnet add package Microsoft.Extensions.Configuration.FileExtensions --version 2.2.0
-dotnet add package Microsoft.Extensions.Configuration.Json --version 2.2.0
-dotnet add package Microsoft.Extensions.Configuration.Binder --version 2.2.0
-dotnet add package Microsoft.Identity.Client --version 4.3.1
-dotnet add package Microsoft.Graph --version 1.17.0
+dotnet add package Microsoft.Extensions.Configuration --version 3.1.0
+dotnet add package Microsoft.Extensions.Configuration.FileExtensions --version 3.1.0
+dotnet add package Microsoft.Extensions.Configuration.Json --version 3.1.0
+dotnet add package Microsoft.Extensions.Configuration.Binder --version 3.1.0
+dotnet add package Microsoft.Identity.Client --version 4.7.1
+dotnet add package Microsoft.Graph --version 1.21.0
 ```
 
 ## <a name="design-the-app"></a>Concevoir l’application
