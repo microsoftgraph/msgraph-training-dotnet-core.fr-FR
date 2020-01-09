@@ -20,18 +20,14 @@ Commencez par créer un projet de console principale .NET à l’aide de l' [int
 
 Avant de poursuivre, ajoutez des dépendances supplémentaires que vous utiliserez plus tard.
 
-- [Microsoft. extensions. Configuration](https://github.com/aspnet/Extensions) pour lire la configuration de l’application à partir d’un fichier JSON.
+- [Microsoft. extensions. Configuration. UserSecrets](https://github.com/aspnet/extensions) pour lire la configuration de l’application à partir du [magasin de secrets de développement .net](https://docs.microsoft.com/aspnet/core/security/app-secrets).
 - [Bibliothèque d’authentification Microsoft (MSAL) pour .net](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) pour authentifier l’utilisateur et acquérir des jetons d’accès.
 - [Bibliothèque cliente .NET Microsoft Graph](https://github.com/microsoftgraph/msgraph-sdk-dotnet) pour effectuer des appels à Microsoft Graph.
-- [Fournisseurs d’authentification pour le kit de développement logiciel (SDK) Microsoft Graph .net](https://github.com/microsoftgraph/msgraph-sdk-dotnet-auth) pour permettre à la bibliothèque cliente Graph de demander automatiquement des jetons lors de la réalisation d’appels d’API.
 
 Exécutez les commandes suivantes dans votre interface CLI pour installer les dépendances.
 
 ```Shell
-dotnet add package Microsoft.Extensions.Configuration --version 3.1.0
-dotnet add package Microsoft.Extensions.Configuration.FileExtensions --version 3.1.0
-dotnet add package Microsoft.Extensions.Configuration.Json --version 3.1.0
-dotnet add package Microsoft.Extensions.Configuration.Binder --version 3.1.0
+dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 3.1.0
 dotnet add package Microsoft.Identity.Client --version 4.7.1
 dotnet add package Microsoft.Graph --version 1.21.0
 ```
