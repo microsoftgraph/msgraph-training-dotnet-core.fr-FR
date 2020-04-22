@@ -6,24 +6,20 @@ Dans cet exercice, vous allez créer une nouvelle application Azure AD à l’ai
 
 1. Sélectionnez **Azure Active Directory** dans le volet de navigation gauche, puis sélectionnez **Inscriptions d’applications** sous **Gérer**.
 
-    ![Capture d’écran des inscriptions d’application ](./images/aad-portal-app-registrations.png)
+    ![Une capture d’écran des inscriptions d’applications ](./images/aad-portal-app-registrations.png)
 
 1. Sélectionnez **Nouvelle inscription**. Sur la page **Inscrire une application**, définissez les valeurs comme suit.
 
     - Définissez le **Nom** sur `.NET Core Graph Tutorial`.
     - Définissez les **Types de comptes pris en charge** sur **Comptes dans un annuaire organisationnel et comptes personnels Microsoft**.
-    - Laissez **Redirect URI** vide.
+    - Sous **URI de redirection**, remplacez la liste déroulante par **client Public (mobile & Desktop)** et définissez `https://login.microsoftonline.com/common/oauth2/nativeclient`la valeur sur.
 
-    ![Capture d’écran de la page inscrire une application](./images/aad-register-an-app.png)
+    ![Capture d’écran de la page Inscrire une application](./images/aad-register-an-app.png)
 
-1. Sélectionnez **Enregistrer**. Sur la page **didacticiel .net Core Graph** , copiez la valeur de l' **ID d’application (client)** et enregistrez-la, vous en aurez besoin à l’étape suivante.
+1. Sélectionner **Inscription**. Sur la page **didacticiel .net Core Graph** , copiez la valeur de l' **ID d’application (client)** et enregistrez-la, vous en aurez besoin à l’étape suivante.
 
-    ![Capture d’écran de l’ID d’application de la nouvelle inscription de l’application](./images/aad-application-id.png)
+    ![Une capture d’écran de l’ID d’application de la nouvelle inscription d'application](./images/aad-application-id.png)
 
-1. Sélectionnez le lien **Ajouter un URI de redirection** . Sur la page **URI de redirection** , recherchez la section **URI de redirection suggérée pour les clients publics (mobile, bureau)** . Sélectionnez l' `https://login.microsoftonline.com/common/oauth2/nativeclient` URI.
-
-    ![Capture d’écran de la page des URI de redirection](./images/aad-redirect-uris.png)
-
-1. Recherchez la section **type de client par défaut** et modifiez le paramètre **traiter l’application comme un client public** sur **Oui**, puis cliquez sur **Enregistrer**.
+1. Sous **Gérer**, sélectionnez **Authentification**. Recherchez la section **Paramètres avancés** et modifiez le paramètre **traiter l’application en tant que client public** sur **Oui**, puis choisissez **Enregistrer**.
 
     ![Capture d’écran de la section type de client par défaut](./images/aad-default-client-type.png)

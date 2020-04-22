@@ -2,20 +2,20 @@
 
 Dans cet exercice, vous allez étendre l’application de l’exercice précédent pour prendre en charge l’authentification avec Azure AD. Cela est nécessaire pour obtenir le jeton d’accès OAuth nécessaire pour appeler Microsoft Graph. Dans cette étape, vous allez intégrer la [bibliothèque d’authentification Microsoft (MSAL) pour .net](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) dans l’application.
 
-Initialisez le [magasin de secrets de développement .net](https://docs.microsoft.com/aspnet/core/security/app-secrets) en ouvrant votre interface CLI dans le répertoire qui contient **GraphTutorial. csproj** et en exécutant la commande suivante.
+1. Initialisez le [magasin de secrets de développement .net](/aspnet/core/security/app-secrets) en ouvrant votre interface CLI dans le répertoire qui contient **GraphTutorial. csproj** et en exécutant la commande suivante.
 
-```Shell
-dotnet user-secrets init
-```
+    ```Shell
+    dotnet user-secrets init
+    ```
 
-Ensuite, ajoutez l’ID de votre application et une liste des étendues requises dans le magasin secret à l’aide des commandes suivantes. Remplacez `YOUR_APP_ID_HERE` par l’ID d’application que vous avez créé dans le portail Azure.
+1. Ajoutez votre ID d’application et une liste d’étendues requises au magasin secret à l’aide des commandes suivantes. Remplacez `YOUR_APP_ID_HERE` par l’ID d’application que vous avez créé dans le portail Azure.
 
-```Shell
-dotnet user-secrets set appId "YOUR_APP_ID_HERE"
-dotnet user-secrets set scopes "User.Read;Calendars.Read"
-```
+    ```Shell
+    dotnet user-secrets set appId "YOUR_APP_ID_HERE"
+    dotnet user-secrets set scopes "User.Read;Calendars.Read"
+    ```
 
-## <a name="implement-sign-in"></a>Mettre en œuvre la connexion
+## <a name="implement-sign-in"></a>Implémentation de la connexion
 
 Dans cette section, vous allez créer un fournisseur d’authentification qui peut être utilisé avec le kit de développement logiciel (SDK) Graph et qui peut également être utilisé pour demander explicitement un jeton d’accès à l’aide du [flux de code du périphérique](https://docs.microsoft.com/azure/active-directory/develop/v2-oauth2-device-code).
 
@@ -24,79 +24,7 @@ Dans cette section, vous allez créer un fournisseur d’authentification qui pe
 1. Créez un répertoire dans le répertoire **GraphTutorial** nommé **Authentication**.
 1. Créez un fichier dans le répertoire **d’authentification** nommé **DeviceCodeAuthProvider.cs** et ajoutez le code suivant à ce fichier.
 
-    ```csharp
-    using Microsoft.Graph;
-    using Microsoft.Identity.Client;
-    using System;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Threading.Tasks;
-
-    namespace GraphTutorial
-    {
-        public class DeviceCodeAuthProvider : IAuthenticationProvider
-        {
-            private IPublicClientApplication _msalClient;
-            private string[] _scopes;
-            private IAccount _userAccount;
-
-            public DeviceCodeAuthProvider(string appId, string[] scopes)
-            {
-                _scopes = scopes;
-
-                _msalClient = PublicClientApplicationBuilder
-                    .Create(appId)
-                    .WithAuthority(AadAuthorityAudience.AzureAdAndPersonalMicrosoftAccount, true)
-                    .Build();
-            }
-
-            public async Task<string> GetAccessToken()
-            {
-                // If there is no saved user account, the user must sign-in
-                if (_userAccount == null)
-                {
-                    try
-                    {
-                        // Invoke device code flow so user can sign-in with a browser
-                        var result = await _msalClient.AcquireTokenWithDeviceCode(_scopes, callback => {
-                            Console.WriteLine(callback.Message);
-                            return Task.FromResult(0);
-                        }).ExecuteAsync();
-
-                        _userAccount = result.Account;
-                        return result.AccessToken;
-                    }
-                    catch (Exception exception)
-                    {
-                        Console.WriteLine($"Error getting access token: {exception.Message}");
-                        return null;
-                    }
-                }
-                else
-                {
-                    // If there is an account, call AcquireTokenSilent
-                    // By doing this, MSAL will refresh the token automatically if
-                    // it is expired. Otherwise it returns the cached token.
-
-                        var result = await _msalClient
-                            .AcquireTokenSilent(_scopes, _userAccount)
-                            .ExecuteAsync();
-
-                       return result.AccessToken;
-                }
-            }
-
-            // This is the required function to implement IAuthenticationProvider
-            // The Graph SDK will call this function each time it makes a Graph
-            // call.
-            public async Task AuthenticateRequestAsync(HttpRequestMessage requestMessage)
-            {
-                requestMessage.Headers.Authorization =
-                    new AuthenticationHeaderValue("bearer", await GetAccessToken());
-            }
-        }
-    }
-    ```
+    :::code language="csharp" source="../demo/GraphTutorial/Authentication/DeviceCodeAuthProvider.cs" id="AuthProviderSnippet":::
 
 Examinez ce que fait ce code.
 
@@ -110,53 +38,13 @@ Examinez ce que fait ce code.
 
 Dans cette section, vous allez mettre à jour l’application `GetAccessToken` pour appeler la fonction, qui se connecte à l’utilisateur. Vous ajouterez également du code pour afficher le jeton.
 
-1. Ouvrez **Program.cs** et ajoutez les instructions `using` suivantes en haut du fichier.
-
-    ```csharp
-    using Microsoft.Extensions.Configuration;
-    ```
-
 1. Ajoutez la fonction suivante à la classe `Program`.
 
-    ```csharp
-    static IConfigurationRoot LoadAppSettings()
-    {
-        var appConfig = new ConfigurationBuilder()
-            .AddUserSecrets<Program>()
-            .Build();
-
-        // Check for required settings
-        if (string.IsNullOrEmpty(appConfig["appId"]) ||
-            string.IsNullOrEmpty(appConfig["scopes"]))
-        {
-            return null;
-        }
-
-        return appConfig;
-    }
-    ```
+    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="LoadAppSettingsSnippet":::
 
 1. Ajoutez le code suivant à la `Main` fonction immédiatement après la `Console.WriteLine(".NET Core Graph Tutorial\n");` ligne.
 
-    ```csharp
-    var appConfig = LoadAppSettings();
-
-    if (appConfig == null)
-    {
-        Console.WriteLine("Missing or invalid appsettings.json...exiting");
-        return;
-    }
-
-    var appId = appConfig["appId"];
-    var scopesString = appConfig["scopes"];
-    var scopes = scopesString.Split(';');
-
-    // Initialize the auth provider with values from appsettings.json
-    var authProvider = new DeviceCodeAuthProvider(appId, scopes);
-
-    // Request a token to sign in the user
-    var accessToken = authProvider.GetAccessToken().Result;
-    ```
+    :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="InitializationSnippet":::
 
 1. Ajoutez le code suivant à la `Main` fonction immédiatement après la `// Display access token` ligne.
 
@@ -174,6 +62,6 @@ Dans cette section, vous allez mettre à jour l’application `GetAccessToken` p
     ```
 
     > [!TIP]
-    > Si vous rencontrez des erreurs, comparez votre **Program.cs** à l' [exemple sur GitHub](https://github.com/microsoftgraph/msgraph-training-dotnet-core/blob/master/demos/01-create-app/GraphTutorial/Program.cs).
+    > Si vous rencontrez des erreurs, comparez votre **Program.cs** à l' [exemple sur GitHub](https://github.com/microsoftgraph/msgraph-training-dotnet-core/blob/master/demo/GraphTutorial/Program.cs).
 
 1. Ouvrez un navigateur et accédez à l’URL affichée. Entrez le code fourni et connectez-vous. Une fois terminé, revenez à l’application et choisissez le **1. Afficher** l’option de jeton d’accès pour afficher le jeton d’accès.
