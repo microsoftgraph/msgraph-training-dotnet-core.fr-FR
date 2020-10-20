@@ -4,7 +4,7 @@
 
 Pour exécuter le projet terminé dans ce dossier, vous avez besoin des éléments suivants :
 
-- Le [Kit de développement logiciel .net Core](https://dotnet.microsoft.com/download) installé sur votre ordinateur de développement. (**Remarque :** ce didacticiel a été écrit avec .net Core SDK version 2.2.401. Les étapes de ce guide peuvent fonctionner avec d’autres versions, mais cela n’a pas été testé.)
+- Le [Kit de développement logiciel .net Core](https://dotnet.microsoft.com/download) installé sur votre ordinateur de développement. (**Remarque :** ce didacticiel a été écrit avec .net Core SDK version 3.1.402. Les étapes de ce guide peuvent fonctionner avec d’autres versions, mais cela n’a pas été testé.)
 - Un compte professionnel ou scolaire Microsoft.
 
 Si vous n’avez pas de compte Microsoft, vous pouvez vous [inscrire au programme pour les développeurs office 365](https://developer.microsoft.com/office/dev-program) pour obtenir un abonnement gratuit à Office 365.

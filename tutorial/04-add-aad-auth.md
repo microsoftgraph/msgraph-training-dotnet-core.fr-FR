@@ -12,8 +12,14 @@ Dans cet exercice, vous allez étendre l’application de l’exercice précéde
 
     ```Shell
     dotnet user-secrets set appId "YOUR_APP_ID_HERE"
-    dotnet user-secrets set scopes "User.Read;Calendars.Read"
+    dotnet user-secrets set scopes "User.Read;MailboxSettings.Read;Calendars.ReadWrite"
     ```
+
+    Examinons les étendues d’autorisation que vous venez de définir.
+
+    - **User. Read** permet à l’application de lire le profil de l’utilisateur connecté pour obtenir des informations telles que le nom d’affichage et l’adresse de messagerie.
+    - **MailboxSettings. Read** permet à l’application de lire le fuseau horaire, le format de la date et le format d’heure préférés de l’utilisateur.
+    - **Calendars. ReadWrite** permet à l’application de lire les événements existants sur le calendrier de l’utilisateur et d’ajouter de nouveaux événements.
 
 ## <a name="implement-sign-in"></a>Implémentation de la connexion
 
@@ -28,15 +34,15 @@ Dans cette section, vous allez créer un fournisseur d’authentification qui pe
 
 Examinez ce que fait ce code.
 
-- Il utilise l’implémentation `IPublicClientApplication` MSAL pour demander et gérer des jetons.
+- Il utilise l' `IPublicClientApplication` implémentation MSAL pour demander et gérer des jetons.
 - La `GetAccessToken` fonction :
   - Se connecte à l’utilisateur s’il n’est pas déjà connecté à l’aide du flux de code du périphérique.
-  - Garantit que le jeton renvoyé est toujours actualisé à l’aide `AcquireTokenSilent` de la fonction, qui renvoie le jeton mis en cache s’il n’a pas expiré et actualise le jeton s’il a expiré.
+  - Garantit que le jeton renvoyé est toujours actualisé à l’aide de la `AcquireTokenSilent` fonction, qui renvoie le jeton mis en cache s’il n’a pas expiré et actualise le jeton s’il a expiré.
 - Elle implémente l' `IAuthenticationProvider` interface de manière à ce que le kit de développement logiciel Graph puisse utiliser la classe pour authentifier les appels Graph.
 
 ## <a name="sign-in-and-display-the-access-token"></a>Se connecter et afficher le jeton d’accès
 
-Dans cette section, vous allez mettre à jour l’application `GetAccessToken` pour appeler la fonction, qui se connecte à l’utilisateur. Vous ajouterez également du code pour afficher le jeton.
+Dans cette section, vous allez mettre à jour l’application pour appeler la `GetAccessToken` fonction, qui se connecte à l’utilisateur. Vous ajouterez également du code pour afficher le jeton.
 
 1. Ajoutez la fonction suivante à la classe `Program`.
 

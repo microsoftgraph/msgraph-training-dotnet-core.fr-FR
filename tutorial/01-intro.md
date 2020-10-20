@@ -15,7 +15,7 @@ Vous devez également disposer d’un compte Microsoft personnel disposant d’u
 - Vous pouvez vous [inscrire au programme pour les développeurs office 365](https://developer.microsoft.com/office/dev-program) pour obtenir un abonnement gratuit à Office 365.
 
 > [!NOTE]
-> Ce didacticiel a été écrit avec .NET Core SDK version 3.1.200. Les étapes de ce guide peuvent fonctionner avec d’autres versions, mais cela n’a pas été testé.
+> Ce didacticiel a été écrit avec .NET Core SDK version 3.1.402. Les étapes de ce guide peuvent fonctionner avec d’autres versions, mais cela n’a pas été testé.
 
 ## <a name="feedback"></a>Commentaires
 
