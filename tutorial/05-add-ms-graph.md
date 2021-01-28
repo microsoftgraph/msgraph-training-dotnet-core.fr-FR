@@ -1,10 +1,10 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-Dans cet exercice, vous allez incorporer Microsoft Graph dans l’application. Pour cette application, vous allez utiliser la [bibliothèque cliente .NET Microsoft Graph](https://github.com/microsoftgraph/msgraph-sdk-dotnet) pour passer des appels à Microsoft Graph.
+Dans cet exercice, vous allez incorporer Microsoft Graph dans l’application. Pour cette application, vous allez utiliser la bibliothèque [cliente Microsoft Graph .NET](https://github.com/microsoftgraph/msgraph-sdk-dotnet) pour effectuer des appels à Microsoft Graph.
 
 ## <a name="get-user-details"></a>Obtenir les détails de l’utilisateur
 
-1. Créez un répertoire dans le répertoire **GraphTutorial** nommé **Graph**.
+1. Créez un répertoire dans le **répertoire GraphTutorial** nommé **Graph**.
 1. Créez un fichier dans le répertoire **Graph** nommé **GraphHelper.cs** et ajoutez le code suivant à ce fichier.
 
     ```csharp
@@ -12,6 +12,7 @@ Dans cet exercice, vous allez incorporer Microsoft Graph dans l’application. P
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using TimeZoneConverter;
 
     namespace GraphTutorial
     {
@@ -46,11 +47,11 @@ Dans cet exercice, vous allez incorporer Microsoft Graph dans l’application. P
     }
     ```
 
-1. Ajoutez le code suivant dans `Main` in **./Program.cs** juste après l' `GetAccessToken` appel pour obtenir l’utilisateur et en sortie le nom d’affichage de l’utilisateur.
+1. Ajoutez le code suivant dans ./Program.cs juste après l’appel pour obtenir l’utilisateur et obtenir le nom complet `Main` de  `GetAccessToken` l’utilisateur.
 
     :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="GetUserSnippet":::
 
-Si vous exécutez l’application maintenant, une fois que vous vous êtes en train de vous reconnecter à l’application, vous vous félicitez par son nom.
+Si vous exécutez l’application maintenant, une fois que vous vous connectez, l’application vous reçoit par son nom.
 
 ## <a name="get-a-calendar-view"></a>Obtenir un affichage Calendrier
 
@@ -61,23 +62,23 @@ Si vous exécutez l’application maintenant, une fois que vous vous êtes en tr
 Que fait ce code ?
 
 - L’URL qui sera appelée est `/me/calendarview`.
-- Les `startDateTime` `endDateTime` paramètres et définissent le début et la fin de l’affichage Calendrier.
-- L' `Prefer: outlook.timezone` en-tête entraîne le `start` `end` renvoi des événements et dans le fuseau horaire de l’utilisateur.
-- La `Top` fonction demande au plus 50 événements.
-- La `Select` fonction limite les champs renvoyés pour chaque événement à ceux que l’application utilisera réellement.
-- La `OrderBy` fonction trie les résultats en fonction de la date et de l’heure de début.
+- Les `startDateTime` `endDateTime` paramètres définissent le début et la fin de l’affichage Calendrier.
+- `Prefer: outlook.timezone`L’en-tête entraîne le retour des événements dans `start` le fuseau horaire de `end` l’utilisateur.
+- La `Top` fonction demande au maximum 50 événements.
+- La fonction limite les champs renvoyés pour chaque événement à ceux que `Select` l’application utilisera réellement.
+- La `OrderBy` fonction trie les résultats par date et heure de début.
 
 ## <a name="display-the-results"></a>Afficher les résultats
 
-1. Ajoutez la fonction suivante à la `Program` classe pour mettre en forme les propriétés [DateTimeTimeZone](/graph/api/resources/datetimetimezone?view=graph-rest-1.0) de Microsoft Graph dans un format convivial.
+1. Ajoutez la fonction suivante à la classe pour mettre en forme les `Program` [propriétés dateTimeTimeZone](/graph/api/resources/datetimetimezone?view=graph-rest-1.0) de Microsoft Graph dans un format convivial.
 
     :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="FormatDateSnippet":::
 
-1. Ajoutez la fonction suivante à la `Program` classe pour obtenir les événements de l’utilisateur et les sortir dans la console.
+1. Ajoutez la fonction suivante à la classe pour obtenir les événements `Program` de l’utilisateur et les sortir dans la console.
 
     :::code language="csharp" source="../demo/GraphTutorial/Program.cs" id="ListEventsSnippet":::
 
-1. Ajoutez les éléments suivants juste après le `// List the calendar` commentaire dans la `Main` fonction.
+1. Ajoutez ce qui suit juste après `// List the calendar` le commentaire dans la `Main` fonction.
 
     ```csharp
     ListCalendarEvents(
@@ -86,7 +87,7 @@ Que fait ce code ?
     );
     ```
 
-1. Enregistrez toutes vos modifications et exécutez l’application. Sélectionnez l’option **afficher le calendrier de cette semaine** pour afficher la liste des événements de l’utilisateur.
+1. Enregistrez toutes vos modifications et exécutez l’application. Choisissez **l’option Afficher le calendrier de cette semaine** pour afficher la liste des événements de l’utilisateur.
 
     ```Shell
     Welcome Lynne Robbins!

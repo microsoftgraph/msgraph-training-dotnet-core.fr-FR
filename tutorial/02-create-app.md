@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD002 MD041 -->
 
-Commencez par créer un projet de console principale .NET à l’aide de l' [interface CLI .net Core](/dotnet/core/tools/).
+Commencez par créer un projet de console .NET Core à l’aide [de .NET Core CLI](/dotnet/core/tools/).
 
 1. Ouvrez votre interface de ligne de commande (CLI) dans un répertoire où vous souhaitez créer le projet. Exécutez la commande suivante.
 
@@ -8,29 +8,29 @@ Commencez par créer un projet de console principale .NET à l’aide de l' [int
     dotnet new console -o GraphTutorial
     ```
 
-1. Une fois le projet créé, vérifiez qu’il fonctionne en remplaçant le répertoire actuel par le répertoire **GraphTutorial** et en exécutant la commande suivante dans votre CLI.
+1. Une fois le projet créé, vérifiez qu’il fonctionne en modifiant le répertoire actuel en répertoire **GraphTutorial** et en exécutant la commande suivante dans votre CLI.
 
     ```Shell
     dotnet run
     ```
 
-    Si elle fonctionne, l’application doit produire une sortie `Hello World!` .
+    Si elle fonctionne, l’application doit être `Hello World!` sortie.
 
 ## <a name="install-dependencies"></a>Installer les dépendances
 
-Avant de poursuivre, ajoutez des dépendances supplémentaires que vous utiliserez plus tard.
+Avant de passer à autre chose, ajoutez des dépendances supplémentaires que vous utiliserez ultérieurement.
 
-- [Microsoft.Extensions.Configuration. UserSecrets](https://github.com/aspnet/extensions) pour lire la configuration de l’application à partir du [magasin de secrets de développement .net](https://docs.microsoft.com/aspnet/core/security/app-secrets).
-- [Bibliothèque d’authentification Microsoft (MSAL) pour .net](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) pour authentifier l’utilisateur et acquérir des jetons d’accès.
-- [Bibliothèque cliente .NET Microsoft Graph](https://github.com/microsoftgraph/msgraph-sdk-dotnet) pour effectuer des appels à Microsoft Graph.
-- [TimeZoneConverter](https://github.com/mj1856/TimeZoneConverter) pour la traduction des identificateurs de fuseau horaire Windows en identificateurs IANA.
+- [Microsoft.Extensions.Config'uration. UserSecrets pour lire](https://github.com/aspnet/extensions) la configuration de l’application à partir du magasin de secrets [de développement .NET](https://docs.microsoft.com/aspnet/core/security/app-secrets).
+- [Microsoft Authentication Library (MSAL) pour .NET](https://github.com/AzureAD/microsoft-authentication-library-for-dotnet) authentifier l’utilisateur et acquérir des jetons d’accès.
+- [Bibliothèque cliente Microsoft Graph .NET pour](https://github.com/microsoftgraph/msgraph-sdk-dotnet) appeler Microsoft Graph.
+- [TimeZoneConverter pour](https://github.com/mj1856/TimeZoneConverter) la traduction des identificateurs de fuseau horaire Windows en identificateurs IANA.
 
-Exécutez les commandes suivantes dans votre interface CLI pour installer les dépendances.
+Exécutez les commandes suivantes dans votre CLI pour installer les dépendances.
 
 ```Shell
-dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 3.1.8
-dotnet add package Microsoft.Identity.Client --version 4.19.0
-dotnet add package Microsoft.Graph --version 3.15.0
+dotnet add package Microsoft.Extensions.Configuration.UserSecrets --version 5.0.0
+dotnet add package Microsoft.Identity.Client --version 4.25.0
+dotnet add package Microsoft.Graph --version 3.22.0
 dotnet add package TimeZoneConverter
 ```
 
@@ -38,7 +38,7 @@ dotnet add package TimeZoneConverter
 
 Dans cette section, vous allez créer un menu simple basé sur la console.
 
-Ouvrez **./Program.cs** dans un éditeur de texte (tel que [Visual Studio code](https://code.visualstudio.com/)) et remplacez l’intégralité de son contenu par le code suivant.
+Ouvrez **./Program.cs** dans un éditeur de texte (par [exemple, Visual Studio Code)](https://code.visualstudio.com/)et remplacez tout son contenu par le code suivant.
 
 ```csharp
 using Microsoft.Extensions.Configuration;
